@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Gallery | Luxury Accommodations</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Animation for filter buttons */
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #be8a56;
+            transition: width 0.3s ease;
+        }
+        
+        .filter-btn:hover::after {
+            width: 100%;
+        }
+        
+        .filter-active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-10 transition-all duration-300" id="header">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html"><h1 class="text-2xl font-bold text-primary">Gayatri's<span class="text-accent">Hotel</span></h1></a>
+            </div>
+            
+        
+        </div>
+    
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-80 md:h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-4 h-full flex flex-col justify-center items-center relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Our Hotel Gallery</h2>
+            <p class="text-xl text-white max-w-2xl">Explore our luxurious accommodations and amenities through our carefully curated gallery</p>
+        </div>
+    </section>
+
+    <!-- Gallery Filter -->
+    <section class="py-10 container mx-auto px-4">
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button class="filter-btn filter-active px-4 py-2 text-gray-800 hover:text-amber-700 font-medium" data-filter="all">All</button>
+            <button class="filter-btn px-4 py-2 text-gray-800 hover:text-amber-700 font-medium" data-filter="rooms">Rooms & Suites</button>
+            <button class="filter-btn px-4 py-2 text-gray-800 hover:text-amber-700 font-medium" data-filter="dining">Dining</button>
+            <button class="filter-btn px-4 py-2 text-gray-800 hover:text-amber-700 font-medium" data-filter="amenities">Amenities</button>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="pb-16 container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- superior Room -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="rooms">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/SUPERIOR ROOM KING SIZE BED.JPG" 
+                        alt="Deluxe Room" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/SUPERIOR ROOM KING SIZE BED.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Superior Room</h3>
+                    <p class="text-gray-600 mt-1">Elegant and comfortable accommodation with modern amenities</p>
+                </div>
+            </div>
+
+            <!-- primium Suite -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="rooms">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/PREMIUM ROOM.JPG" 
+                        alt="Executive Suite" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/PREMIUM ROOM.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Executive Suite</h3>
+                    <p class="text-gray-600 mt-1">Spacious suites with separate living area, premium amenities and stunning views.</p>
+                </div>
+            </div>
+
+            <!-- Presidential Suite -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="rooms">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/DSC_8245.JPG" 
+                        alt="Presidential Suite" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/DSC_8245.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Presidential Suite</h3>
+                    <p class="text-gray-600 mt-1">Our most luxurious accommodation with panoramic views</p>
+                </div>
+            </div>
+
+            <!-- Fine Dining Restaurant -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="dining">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/img1.JPG" 
+                        alt="Fine Dining Restaurant" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/img1.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">The Gayatri's Restaurant</h3>
+                    <p class="text-gray-600 mt-1">Exquisite fine dining experience with gourmet cuisine</p>
+                </div>
+            </div>
+
+            <!-- Rooftop Bar -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="dining">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/img2.JPG" 
+                        alt="Rooftop Bar" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/img2.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Sky Lounge</h3>
+                    <p class="text-gray-600 mt-1">Rooftop bar with stunning city views and signature cocktails</p>
+                </div>
+            </div>
+
+            <!-- Swimming Pool -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="amenities">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjBwb29sfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" 
+                        alt="Swimming Pool" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWwlMjBwb29sfGVufDB8fDB8fHww&auto=format&fit=crop&w=1200&q=80">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Infinity Pool</h3>
+                    <p class="text-gray-600 mt-1">Stunning infinity pool with panoramic views</p>
+                </div>
+            </div>
+
+            <!-- Fitness Center -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="amenities">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBneW18ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" 
+                        alt="Fitness Center" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBneW18ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1200&q=80">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Fitness Center</h3>
+                    <p class="text-gray-600 mt-1">State-of-the-art fitness equipment and personal trainers</p>
+                </div>
+            </div>
+
+         
+
+            <!-- Wellness Area -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="spa">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1531112998853-0fca2c93cdbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2F1bmF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" 
+                        alt="Wellness Area" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="https://images.unsplash.com/photo-1531112998853-0fca2c93cdbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2F1bmF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1200&q=80">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Wellness Area</h3>
+                    <p class="text-gray-600 mt-1">Sauna, steam room, and relaxation areas for complete rejuvenation</p>
+                </div>
+            </div>
+
+            <!-- Lobby -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="amenities">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBsb2JieXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" 
+                        alt="Hotel Lobby" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBsb2JieXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1200&q=80">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Grand Lobby</h3>
+                    <p class="text-gray-600 mt-1">Elegant and welcoming entrance with luxurious furnishings</p>
+                </div>
+            </div>
+
+            <!-- Cafe -->
+            <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white" data-category="dining">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/COMPLIMENTARY.JPG" 
+                        alt="Indian Café" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4">
+                        <button class="view-image bg-white bg-opacity-80 rounded-full p-2 text-gray-800 hover:bg-amber-700 hover:text-white transition-colors" data-src="images/COMPLIMENTARY.JPG">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Desi Zayka Café</h3>
+                    <p class="text-gray-600 mt-1">Traditional Indian snacks, masala chai, and a warm, homely ambiance to relax and enjoy.</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center p-4">
+        <button id="closeModal" class="absolute top-6 right-6 text-white hover:text-amber-500 text-3xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="max-w-5xl w-full">
+            <img id="modalImage" src="/placeholder.svg" alt="Large view" class="w-full h-auto max-h-[80vh] object-contain">
+            <div class="text-white text-center mt-4 text-lg" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Luxury <span class="text-amber-500">Hotels</span></h3>
+                    <p class="text-gray-400 mb-4">Experience unparalleled luxury and comfort at our premium hotel locations around the world.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">Rooms & Suites</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">Gallery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-500 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-500"></i>
+                            <span class="text-gray-400">123 Luxury Avenue, Prestige City, Country</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-amber-500"></i>
+                            <span class="text-gray-400">+1 (123) 456-7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-amber-500"></i>
+                            <span class="text-gray-400">info@luxuryhotels.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for special offers and updates</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Your Email Address" class="px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:border-amber-500">
+                        <button type="submit" class="bg-amber-700 hover:bg-amber-600 text-white py-2 px-4 rounded transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Luxury Hotels. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('filter-active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('filter-active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Modal functionality
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeModal = document.getElementById('closeModal');
+            const viewButtons = document.querySelectorAll('.view-image');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const imgSrc = this.getAttribute('data-src');
+                    const caption = this.closest('.gallery-item').querySelector('h3').textContent;
+                    
+                    modalImage.src = imgSrc;
+                    modalCaption.textContent = caption;
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
