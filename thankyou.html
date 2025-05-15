@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Gayatri's Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hotel: {
+                            primary: '#9C6644',
+                            secondary: '#E2C799',
+                            light: '#F8F4EA',
+                            dark: '#3F2305'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-hotel-light min-h-screen flex flex-col">
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-lg w-full bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in">
+            <!-- Header with Hotel Logo -->
+            <div class="bg-hotel-primary text-white text-center py-6">
+                <h1 class="font-serif text-3xl font-bold">Gayatri's Hotel</h1>
+                <p class="text-hotel-secondary italic">Comfort & Elegance</p>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div class="inline-block p-3 rounded-full bg-green-100 mb-4">
+                        <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-serif font-bold text-hotel-dark mb-2">Thank You!</h2>
+                    <p class="text-gray-600">Your message has been successfully sent.</p>
+                </div>
+                
+                <div class="bg-hotel-light p-4 rounded-lg mb-6 text-center">
+                    <p class="text-gray-700">We appreciate your interest in Gayatri's Hotel. Our team will get back to you shortly.</p>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <p class="text-gray-500 text-sm">You will be redirected to our homepage in <span id="countdown" class="font-bold text-hotel-primary">10</span> seconds.</p>
+                </div>
+                
+                <div class="flex justify-center">
+                    <a href="index.html" class="bg-hotel-primary hover:bg-hotel-dark text-white font-medium py-2 px-6 rounded-md transition duration-300 text-center">
+                        Return to Homepage
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="bg-gray-50 p-4 text-center border-t">
+                <p class="text-gray-500 text-sm">&copy; 2025 Gayatri's Hotel. All rights reserved.</p>
+                <div class="flex justify-center space-x-4 mt-2">
+                    <a href="#" class="text-gray-400 hover:text-hotel-primary transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-hotel-primary transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-hotel-primary transition"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Countdown timer for redirection
+        let seconds = 10;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownTimer = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(countdownTimer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</body>
+</html>
