@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gayatri's Hotel Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A3950',
+                        secondary: '#F8F9FA',
+                        accent: '#E8AA33',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .room-card {
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .service-icon {
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2);
+            color: #E8AA33;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2A3950;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loader-logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #E8AA33;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: #E8AA33;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(232, 170, 51, 0.5);
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            display: none;
+        }
+
+        @media (min-width: 600px) {
+            .cursor {
+                display: block;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #E8AA33;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .room-3d-container {
+            perspective: 1000px;
+        }
+
+        .room-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .room-3d:hover {
+            transform: rotateY(10deg);
+        }
+    </style>
+</head>
+
+<body class="font-sans w-full overflow-x-hidden bg-white">
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-hotel"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Gayatri's Hotel Experience</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-10 transition-all duration-300" id="header">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-primary">Gayatri's<span class="text-accent">Hotel</span></h1>
+            </div>
+
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-800 hover:text-accent font-medium nav-link">Home</a>
+                <a href="" class="text-gray-800 hover:text-accent font-medium nav-link">Rooms</a>
+                <a href="#services" class="text-gray-800 hover:text-accent font-medium nav-link">Services</a>
+                <a href="#gallery" class="text-gray-800 hover:text-accent font-medium nav-link">Gallery</a>
+                <a href="#about" class="text-gray-800 hover:text-accent font-medium nav-link">About</a>
+                <a href="#contact" class="text-gray-800 hover:text-accent font-medium nav-link">Contact</a>
+            </nav>
+
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+            <div class="container mx-auto px-4 py-3">
+                <a href="#home" class="block py-2 text-gray-800 hover:text-accent font-medium">Home</a>
+                <a href="#rooms" class="block py-2 text-gray-800 hover:text-accent font-medium">Rooms</a>
+                <a href="#services" class="block py-2 text-gray-800 hover:text-accent font-medium">Services</a>
+                <a href="#gallery" class="block py-2 text-gray-800 hover:text-accent font-medium">Gallery</a>
+                <a href="#about" class="block py-2 text-gray-800 hover:text-accent font-medium">About</a>
+                <a href="#contact" class="block py-2 text-gray-800 hover:text-accent font-medium">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-24  bg-cover bg-center h-screen flex items-center parallax"
+        style="background-image: url('images/landing1..JPG');">
+        <div class="container mx-auto px-4">
+            <div class="max-w-xl bg-white bg-opacity-30 backdrop-blur-sm p-8 rounded-lg hero-content shadow-lg">
+                <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Experience Luxury & Comfort</h1>
+                <p class="text-gray-700 text-lg mb-6">Discover the perfect blend of elegance, comfort, and exceptional
+                    service at our premium hotel.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="#rooms"
+                        class="bg-primary text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition text-center explore-btn">Explore
+                        Rooms</a>
+                    <a href="#services"
+                        class="border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white transition text-center">Our
+                        Services</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Featured Rooms -->
+    <section id="rooms" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold text-primary">Our Luxury Rooms</h2>
+                <p class="text-gray-600 mt-2">Experience unparalleled comfort in our premium accommodations</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Deluxe Room -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container">
+                    <div class="room-3d">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                            alt="Deluxe Room" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Deluxe Room</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Our deluxe rooms offer comfort and style with modern amenities
+                                and elegant decor.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-user-friends mr-2"></i>2 Guests</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-bed mr-2"></i>King Bed</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-wifi mr-2"></i>Free WiFi</span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Suite -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container"
+                    data-delay="0.2">
+                    <div class="room-3d">
+                        <img src="images/PREMIUM ROOM.JPG" alt="Premium Suite" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Premium Room</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Spacious suites with separate living area, premium amenities
+                                and stunning views.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-user-friends mr-2"></i>2-4 Guests</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-bed mr-2"></i>King Bed</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-bath mr-2"></i>Jacuzzi</span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Executive Room -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container"
+                    data-delay="0.4">
+                    <div class="room-3d">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                            alt="Executive Room" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Executive Room</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Designed for business travelers with workspace, high-speed
+                                internet and premium amenities.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-user-friends mr-2"></i>2 Guests</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-bed mr-2"></i>Queen Bed</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-briefcase mr-2"></i>Workspace</span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Suite -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container">
+                    <div class="room-3d">
+                        <img src="images/SUPERIOR ROOM KING SIZE BED.JPG" alt="Superior Room"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Superior Room</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Elegant and comfortable room with modern décor, ideal for solo
+                                travelers or couples looking for a relaxed stay.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">
+                                    <i class="fas fa-user-friends mr-2"></i>2 Guests
+                                </span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">
+                                    <i class="fas fa-bed mr-2"></i>King Bed
+                                </span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">
+                                    <i class="fas fa-coffee mr-2"></i>Complimentary Breakfast
+                                </span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- private meeting rooms Suite -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container"
+                    data-delay="0.2">
+                    <div class="room-3d">
+                        <img src="images/PRIVATE MEETING ROOM.JPG" alt="Private Meeting Room"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Private Meeting Room</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">A quiet, well-equipped space perfect for business meetings,
+                                interviews, or confidential discussions.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-user-friends mr-2"></i>8 People</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-tv mr-2"></i>Projector & Screen</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-wifi mr-2"></i>High-Speed Wi-Fi</span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Honeymoon Suite -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden room-card reveal room-3d-container"
+                    data-delay="0.4">
+                    <div class="room-3d">
+                        <img src="images/VENTILATED ROOMS.JPG" alt="Honeymoon Suite" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">Honeymoon Suite</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Romantic suite designed for couples with luxurious amenities,
+                                private balcony with stunning views.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-user-friends mr-2"></i>2 Guests</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-bed mr-2"></i>King Bed</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"><i
+                                        class="fas fa-hot-tub mr-2"></i>Private Jacuzzi</span>
+                            </div>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold text-primary">Hotel Services</h2>
+                <p class="text-gray-600 mt-2">Enjoy our world-class facilities and services</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-md text-center reveal service-card" data-delay="0.2">
+                    <div class="text-primary text-4xl mb-4 service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Fine Dining</h3>
+                    <p class="text-gray-600">Experience culinary excellence at our multi-cuisine restaurant with expert
+                        chefs.</p>
+                </div>
+
+
+
+                <div class="bg-white p-6 rounded-lg shadow-md text-center reveal service-card">
+                    <div class="text-primary text-4xl mb-4 service-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Wi-Fi Services</h3>
+                    <p class="text-gray-600">Enjoy high-speed internet connectivity for seamless browsing, streaming,
+                        and work.</p>
+                </div>
+
+
+                <div class="bg-white p-6 rounded-lg shadow-md text-center reveal service-card" data-delay="0.2">
+                    <div class="text-primary text-4xl mb-4 service-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">24/7 Room Service</h3>
+                    <p class="text-gray-600">Enjoy delicious meals and beverages in the comfort of your room anytime.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md text-center reveal service-card" data-delay="0.4">
+                    <div class="text-primary text-4xl mb-4 service-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Rooftop Bar</h3>
+                    <p class="text-gray-600">Enjoy handcrafted cocktails with panoramic views of the city skyline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="py-24 bg-cover bg-center parallax flex items-center"
+        style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto bg-white bg-opacity-90 p-8 rounded-lg reveal">
+                <h2 class="text-3xl font-bold text-primary mb-4">Experience Luxury Like Never Before</h2>
+                <p class="text-gray-700 text-lg mb-6">Our hotel combines elegant design, premium amenities, and
+                    exceptional service to create an unforgettable stay experience.</p>
+                <a href="#contact"
+                    class="inline-block bg-accent text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition">Contact
+                    Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold text-primary">Hotel Gallery</h2>
+                <p class="text-gray-600 mt-2">Take a visual tour of our Gayatri's Hotel</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="overflow-hidden rounded-lg gallery-item reveal">
+                    <img src="images/landing1..JPG" alt="Hotel Lobby" class="w-full h-64 object-cover">
+                </div>
+
+
+                <div class="overflow-hidden rounded-lg gallery-item reveal" data-delay="0.4">
+                    <img src="images/resp.jpg" alt="Gym" class="w-full h-64 object-cover">
+                </div>
+
+                <div class="overflow-hidden rounded-lg gallery-item reveal" data-delay="0.1">
+                    <img src="images/PREMIUM ROOM.JPG" alt="Swimming Pool" class="w-full h-64 object-cover">
+                </div>
+
+                <div class="overflow-hidden rounded-lg gallery-item reveal" data-delay="0.2">
+                    <img src="images/img1.JPG" alt="Restaurant" class="w-full h-64 object-cover">
+                </div>
+
+
+                <div class="overflow-hidden rounded-lg gallery-item reveal" data-delay="0.3">
+                    <img src="images/img2.JPG" alt="Spa" class="w-full h-64 object-cover">
+                </div>
+
+                <div class="overflow-hidden rounded-lg gallery-item reveal" data-delay="0.5">
+                    <img src="images/PRIVATE MEETING ROOM.JPG" alt="Rooftop Bar" class="w-full h-64 object-cover">
+                </div>
+            </div>
+
+            <div class="text-center mt-10 reveal">
+                <a href="viewgallery.html"
+                    class="inline-block bg-primary text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition">View
+                    Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="relative">
+                        <img src="images/landing1..JPG"
+                            alt="Hotel Exterior" class="rounded-lg shadow-lg w-full">
+                        <div class="absolute -bottom-6 -right-6 bg-accent p-4 rounded-lg shadow-lg hidden md:block">
+                            <p class="text-white font-bold text-xl">Established 2020</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal" data-delay="0.2">
+                    <h2 class="text-3xl font-bold text-primary mb-6">About Our Hotel</h2>
+                    <p class="text-gray-600 mb-4">Welcome to Gayatri's Hotel, where elegance meets comfort. For over 5
+                        years, we have been providing exceptional hospitality experiences to guests from around the
+                        world.</p>
+                    <p class="text-gray-600 mb-4">Our hotel is nestled in a prime location, offering easy access to
+                        major attractions while providing a peaceful retreat from the hustle and bustle of the city.</p>
+                    <p class="text-gray-600 mb-6">We take pride in our attention to detail, personalized service, and
+                        commitment to making every stay memorable. Our dedicated staff is available 24/7 to ensure your
+                        comfort and satisfaction.</p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span>Luxury Accommodations</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span>Prime Location</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span>Exceptional Service</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span>Fine Dining</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="reveal">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Contact Us</h2>
+                    <p class="text-gray-600 mb-8">We're here to answer any questions you may have about our hotel and
+                        services.</p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-accent text-xl mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Address</h4>
+                                <p class="text-gray-600">Town Hall Road, Beside khallikote college,
+                                    BERHAMPUR, Ganjam, Odisha</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="text-accent text-xl mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Phone</h4>
+                                <p class="text-gray-600">0680-2223000</p>
+                                <p class="text-gray-600">+91 99123 45234</p>
+                                <p class="text-gray-600">+91 72051 65444</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="text-accent text-xl mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Email</h4>
+                                <p class="text-gray-600">booking.thegayatris@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="text-accent text-xl mr-4">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Reception Hours</h4>
+                                <p class="text-gray-600">24/7, 365 days a year</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="font-bold mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-primary hover:text-accent text-2xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="text-primary hover:text-accent text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-primary hover:text-accent text-2xl">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-primary hover:text-accent text-2xl">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal" data-delay="0.2">
+                    <form action="send.php" method="post" class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold text-primary mb-6">Send Us a Message</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2">First Name</label>
+                                <input name="firstName" type="text" placeholder="Enter your first name"
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">Last Name</label>
+                                <input name="lastName" type="text" placeholder="Enter your last name"
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Email</label>
+                            <input name="email" type="email" placeholder="Enter your email address"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                required>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Phone</label>
+                            <input name="phone" type="tel" placeholder="Enter your phone number"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Message</label>
+                            <textarea name="message" rows="4" placeholder="Write your message here..."
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                required></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary text-white py-3 rounded-md hover:bg-opacity-90 transition">
+                            Send Message
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <div class="h-96 w-full">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3765.401211069201!2d84.79105921023783!3d19.308388944561692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3d51558394f19d%3A0xeb53364b562abba9!2sHotel%20Gayatri&#39;s!5e0!3m2!1sen!2sin!4v1747139128135!5m2!1sen!2sin"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-primary w-full text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Luxury<span class="text-accent">Hotel</span></h3>
+                    <p class="mb-4">Experience luxury and comfort like never before at our premium hotel located in the
+                        heart of the city.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-accent">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-accent">Home</a></li>
+                        <li><a href="#rooms" class="hover:text-accent">Rooms</a></li>
+                        <li><a href="#services" class="hover:text-accent">Services</a></li>
+                        <li><a href="#gallery" class="hover:text-accent">Gallery</a></li>
+                        <li><a href="#about" class="hover:text-accent">About</a></li>
+                        <li><a href="#contact" class="hover:text-accent">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>Town Hall Road, Beside khallikote college, BERHAMPUR, Ganjam, Odisha</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-phone-alt text-white text-xl text-primary mt-1"></i>
+                            <div class="flex flex-col space-y-1">
+                                <a href="tel:+9106802223000" class="text-white hover:text-primary">+91
+                                    0680-2223000</a>
+                                <a href="tel:+919912345234" class="text-white hover:text-[#E8AA33]">+91 99123 45234</a>
+                                <a href="tel:+917205165444" class="text-white hover:text-[#E8AA33]">+91 72051 65444</a>
+                            </div>
+                        </li>
+
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>booking.thegayatris@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2025 Gayatri's Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-6 right-6 bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Loader Animation
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.loader');
+            const progress = document.querySelector('.progress');
+
+            // Animate progress bar
+            gsap.to(progress, {
+                width: '100%',
+                duration: 1.5,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    // Hide loader
+                    gsap.to(loader, {
+                        opacity: 0,
+                        duration: 0.5,
+                        onComplete: () => {
+                            loader.style.display = 'none';
+                            // Animate hero content
+                            gsap.from('.hero-content', {
+                                y: 50,
+                                opacity: 0,
+                                duration: 1,
+                                ease: 'power2.out'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+        });
+
+        // Make cursor larger on hover over links and buttons
+        const links = document.querySelectorAll('a, button');
+
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.backgroundColor = 'rgba(232, 170, 51, 0.3)';
+            });
+
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = 'rgba(232, 170, 51, 0.5)';
+            });
+        });
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                const delay = el.dataset.delay || 0;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, delay * 1000);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Call once on load
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const backToTop = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('bg-white', 'shadow-md');
+                header.classList.remove('bg-transparent');
+
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                header.classList.remove('shadow-md');
+
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        // Back to Top Button
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // GSAP Animations
+        // Initialize ScrollTrigger
+        // gsap.registerPlugin(ScrollTrigger);
+
+        // Animate room cards on scroll
+        gsap.utils.toArray('.room-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.2
+            });
+        });
+
+        // Animate service cards on scroll
+        gsap.utils.toArray('.service-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.2
+            });
+        });
+
+        // Animate gallery items
+        gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+
+        // Animate section headings
+        gsap.utils.toArray('section h2').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: {
+                    trigger: heading,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                y: -50,
+                opacity: 0,
+                duration: 0.8
+            });
+        });
+
+        // 3D Tilt Effect for Room Cards
+        const rooms = document.querySelectorAll('.room-3d');
+
+        rooms.forEach(room => {
+            room.addEventListener('mousemove', (e) => {
+                const rect = room.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const xPercent = x / rect.width - 0.5;
+                const yPercent = y / rect.height - 0.5;
+
+                gsap.to(room, {
+                    rotationY: xPercent * 10,
+                    rotationX: yPercent * -10,
+                    transformPerspective: 500,
+                    duration: 0.5,
+                    ease: 'power1.out'
+                });
+            });
+
+            room.addEventListener('mouseleave', () => {
+                gsap.to(room, {
+                    rotationY: 0,
+                    rotationX: 0,
+                    duration: 0.5,
+                    ease: 'power1.out'
+                });
+            });
+        });
+
+        // Explore Button Animation
+        const exploreBtn = document.querySelector('.explore-btn');
+
+        exploreBtn.addEventListener('mouseenter', () => {
+            gsap.to(exploreBtn, {
+                scale: 1.05,
+                duration: 0.3
+            });
+        });
+
+        exploreBtn.addEventListener('mouseleave', () => {
+            gsap.to(exploreBtn, {
+                scale: 1,
+                duration: 0.3
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</body>
+
+</html>
