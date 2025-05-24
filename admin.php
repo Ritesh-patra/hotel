@@ -214,14 +214,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <header class="bg-white shadow-md">
   <div class="w-full py-1 bg-red-600"> 
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a class="text-white" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg> 
+            </svg> </a>
     </div>
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <!-- Hotel Title -->
         <div class="text-right">
-            <a href="index.html"><h1 class="text-2xl font-bold text-gray-800">Gayatri's Hotel</h1></a>
+            <h1 class="text-2xl font-bold text-gray-800">Gayatri's Hotel</h1>
             <p class="text-sm text-gray-500">Experience luxury and comfort</p>
         </div>
     </div>
