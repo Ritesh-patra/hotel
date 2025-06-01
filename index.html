@@ -12,16 +12,25 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#5A5A5A',
-                        secondary: '#E8E8E8',
-                        accent: '#FF6B35',
-                        gold: '#D4AF37',
-                        darkbrown: '#4A3C31',
-                        lightbrown: '#8B7355'
+                        primary: '#1e3a5f',      // Deep navy blue
+                        secondary: '#f8f9fa',    // Light gray
+                        accent: '#d4af37',       // Elegant gold
+                        gold: '#b8860b',         // Darker gold
+                        darkbrown: '#2c1810',    // Rich dark brown
+                        lightbrown: '#8b6f47',   // Warm brown
+                        cream: '#faf8f3',        // Warm cream
+                        sage: '#9caf88',         // Soft sage green
+                        burgundy: '#722f37',     // Deep burgundy
+                        copper: '#b87333'       // Warm copper
                     },
                     fontFamily: {
                         serif: ['Georgia', 'serif'],
                         sans: ['Arial', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'gradient-luxury': 'linear-gradient(135deg, #1e3a5f 0%, #2c1810 100%)',
+                        'gradient-gold': 'linear-gradient(135deg, #d4af37 0%, #b8860b 100%)',
+                        'gradient-cream': 'linear-gradient(135deg, #faf8f3 0%, #f8f9fa 100%)'
                     }
                 }
             }
@@ -39,7 +48,7 @@
             height: 2px;
             bottom: -4px;
             left: 0;
-            background-color: #FF6B35;
+            background: linear-gradient(90deg, #d4af37, #b8860b);
             transition: width 0.3s ease;
         }
 
@@ -75,129 +84,154 @@
         }
 
         .tab-active {
-            border-bottom: 2px solid #FF6B35;
-            color: #000;
+            border-bottom: 2px solid #d4af37;
+            color: #1e3a5f;
+            background: linear-gradient(135deg, #faf8f3 0%, #f8f9fa 100%);
         }
 
         .tab-inactive {
             border-bottom: none;
-            color: #888;
+            color: #6b7280;
         }
 
         .room-tab-active {
-            color: #FF6B35;
-            border-bottom: 2px solid #FF6B35;
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .luxury-card {
+            background: linear-gradient(135deg, #ffffff 0%, #faf8f3 100%);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(30, 58, 95, 0.1);
+            border-color: #d4af37;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.7) 0%, rgba(44, 24, 16, 0.5) 100%);
+        }
+
+        .section-bg {
+            background: linear-gradient(135deg, #faf8f3 0%, #f8f9fa 100%);
         }
     </style>
 </head>
 
-<body class="font-sans">
+<body class="font-sans bg-cream">
     <!-- Header -->
-    <header class="bg-white shadow-md fixed w-full z-10 transition-all duration-300" id="header">
+    <header class="bg-[#fdf6ee] shadow-lg fixed w-full z-10 transition-all duration-300 border-b-2 border-accent" id="header">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
                 <h1 class="text-2xl font-bold text-primary">Gayatri's<span class="text-accent">Hotel</span></h1>
             </div>
 
             <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="text-gray-800 hover:text-accent font-medium nav-link">Home</a>
-                <a href="#rooms" class="text-gray-800 hover:text-accent font-medium nav-link">Rooms</a>
-                <a href="viewgallery.html" class="text-gray-800 hover:text-accent font-medium nav-link">Gallery</a>
-                <a href="#about" class="text-gray-800 hover:text-accent font-medium nav-link">About</a>
-                <a href="#contact" class="text-gray-800 hover:text-accent font-medium nav-link">Contact</a>
+                <a href="index.html" class="text-primary hover:text-accent font-medium nav-link transition-colors">Home</a>
+                <a href="#rooms" class="text-primary hover:text-accent font-medium nav-link transition-colors">Rooms</a>
+                <a href="viewgallery.html" class="text-primary hover:text-accent font-medium nav-link transition-colors">Gallery</a>
+                <a href="#about" class="text-primary hover:text-accent font-medium nav-link transition-colors">About</a>
+                <a href="#contact" class="text-primary hover:text-accent font-medium nav-link transition-colors">Contact</a>
             </nav>
 
             <div class="md:hidden">
-                <button id="menu-toggle" class="text-gray-800 focus:outline-none">
+                <button id="menu-toggle" class="text-primary focus:outline-none">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+        <div id="mobile-menu" class="md:hidden hidden bg-[#fdf6ee] shadow-md border-t border-accent">
             <div class="container mx-auto px-4 py-3">
-                <a href="index.html" class="block py-2 text-gray-800 hover:text-accent font-medium">Home</a>
-                <a href="#rooms" class="block py-2 text-gray-800 hover:text-accent font-medium">Rooms</a>
-                <a href="viewgallery.html" class="block py-2 text-gray-800 hover:text-accent font-medium">Gallery</a>
-                <a href="#about" class="block py-2 text-gray-800 hover:text-accent font-medium">About</a>
-                <a href="#contact" class="block py-2 text-gray-800 hover:text-accent font-medium">Contact</a>
+                <a href="index.html" class="block py-2 text-primary hover:text-accent font-medium transition-colors">Home</a>
+                <a href="#rooms" class="block py-2 text-primary hover:text-accent font-medium transition-colors">Rooms</a>
+                <a href="viewgallery.html" class="block py-2 text-primary hover:text-accent font-medium transition-colors">Gallery</a>
+                <a href="#about" class="block py-2 text-primary hover:text-accent font-medium transition-colors">About</a>
+                <a href="#contact" class="block py-2 text-primary hover:text-accent font-medium transition-colors">Contact</a>
             </div>
         </div>
     </header>
 
-
-
     <!-- Hero Section -->
-    <section class="relative h-full overflow-hidden">
+    <section class="relative h-screen overflow-hidden">
         <img src="images/landing1..JPG" alt="Welcomhotel Berhampur Restaurant" class="w-full h-full object-cover">
+        <div class="absolute inset-0 hero-overlay flex items-center justify-center">
+            <div class="text-center text-white px-4">
+                <h1 class="text-4xl md:text-6xl font-serif mb-4">Welcome to Luxury</h1>
+                <p class="text-xl md:text-2xl mb-8 text-cream">Experience the finest hospitality in Berhampur</p>
+                <button class="bg-gradient-gold text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <a href="admin.php">BOOK YOUR STAY</a>
+                </button>
+            </div>
+        </div>
     </section>
 
     <!-- Main Content -->
-    <section class="py-16">
+    <section class="py-16 section-bg">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-serif text-center mb-12">Enriching Experiences Await In Berhampur</h2>
+            <h2 class="text-3xl md:text-4xl font-serif text-center mb-12 text-primary">Enriching Experiences Await In Berhampur</h2>
 
-            <div class="border-b border-gray-200 mb-8">
+            <div class="border-b border-accent mb-8">
                 <div class="flex">
-                    <button class="px-6 py-3 tab-active font-medium" id="brief-tab">Brief Sketch</button>
-                    <button class="px-6 py-3 tab-inactive" id="more-tab">More Information</button>
+                    <button class="px-6 py-3 tab-active font-medium rounded-t-lg" id="brief-tab">Brief Sketch</button>
+                    <button class="px-6 py-3 tab-inactive font-medium rounded-t-lg" id="more-tab">More Information</button>
                 </div>
             </div>
 
             <div class="py-8 grid grid-cols-1 lg:grid-cols-2 gap-8" id="brief-content">
                 <div>
                     <img src="images/landing1..JPG" alt="Welcomhotel Berhampur"
-                        class="w-full h-auto rounded-lg shadow-lg">
+                        class="w-full h-auto rounded-lg shadow-xl border-2 border-accent">
                 </div>
                 <div id="about">
                    <h2 class="text-3xl font-bold text-primary mb-6">About Our Hotel</h2>
-                    <p class="text-gray-600 mb-4">Welcome to Gayatri's Hotel, where elegance meets comfort. For over 5
+                    <p class="text-gray-700 mb-4">Welcome to Gayatri's Hotel, where elegance meets comfort. For over 5
                         years, we have been providing exceptional hospitality experiences to guests from around the
                         world.</p>
-                    <p class="text-gray-600 mb-4">Our hotel is nestled in a prime location, offering easy access to
+                    <p class="text-gray-700 mb-4">Our hotel is nestled in a prime location, offering easy access to
                         major attractions while providing a peaceful retreat from the hustle and bustle of the city.</p>
-                    <p class="text-gray-600 mb-6">We take pride in our attention to detail, personalized service, and
+                    <p class="text-gray-700 mb-6">We take pride in our attention to detail, personalized service, and
                         commitment to making every stay memorable. Our dedicated staff is available 24/7 to ensure your
                         comfort and satisfaction.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                        <div>
-                            <h4 class="font-medium mb-2">Location</h4>
+                        <div class="luxury-card p-4 rounded-lg">
+                            <h4 class="font-medium mb-2 text-primary">Location</h4>
                             <div class="flex items-start">
                                 <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
-                                <p>Town Hall Road, Beside khallikote college, BERHAMPUR, Ganjam, Odisha</p>
+                                <p class="text-gray-700">Town Hall Road, Beside khallikote college, BERHAMPUR, Ganjam, Odisha</p>
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="font-medium mb-2">Hotel Contact Details</h4>
+                        <div class="luxury-card p-4 rounded-lg">
+                            <h4 class="font-medium mb-2 text-primary">Hotel Contact Details</h4>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-phone-alt mr-2 text-accent"></i>
-                                <p>+91 72051 65444</p>
+                                <p class="text-gray-700">+91 72051 65444</p>
                             </div>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-fax mr-2 text-accent"></i>
-                                <p>+91 99123 45234</p>
+                                <p class="text-gray-700">+91 99123 45234</p>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-envelope mr-2 text-accent"></i>
-                                <p>booking.thegayatris@gmail.com</p>
+                                <p class="text-gray-700">booking.thegayatris@gmail.com</p>
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="font-medium mb-2">Toll Free Reservation</h4>
+                        <div class="luxury-card p-4 rounded-lg">
+                            <h4 class="font-medium mb-2 text-primary">Toll Free Reservation</h4>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-phone-alt mr-2 text-accent"></i>
-                                <p>+91 0680-2223000</p>
+                                <p class="text-gray-700">+91 0680-2223000</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="py-8 hidden" id="more-content">
@@ -209,38 +243,36 @@
 
             <div class="mt-12">
                 <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-2xl font-serif">Facilities and Amenities</h3>
-                  
+                    <h3 class="text-2xl font-serif text-primary">Facilities and Amenities</h3>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-2">
-                            <i class="fas fa-briefcase text-accent"></i>
+                    <div class="flex flex-col items-center luxury-card p-6 rounded-lg">
+                        <div class="w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <i class="fas fa-briefcase text-white text-xl"></i>
                         </div>
-                        <p class="text-sm text-center">BUSINESS CENTRE</p>
+                        <p class="text-sm text-center font-medium text-primary">BUSINESS CENTRE</p>
                     </div>
 
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-2">
-                            <i class="fas fa-concierge-bell text-accent"></i>
+                    <div class="flex flex-col items-center luxury-card p-6 rounded-lg">
+                        <div class="w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <i class="fas fa-concierge-bell text-white text-xl"></i>
                         </div>
-                        <p class="text-sm text-center">CONCIERGE DESK</p>
+                        <p class="text-sm text-center font-medium text-primary">CONCIERGE DESK</p>
                     </div>
 
-
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-2">
-                            <i class="fas fa-utensils text-accent"></i>
+                    <div class="flex flex-col items-center luxury-card p-6 rounded-lg">
+                        <div class="w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <i class="fas fa-utensils text-white text-xl"></i>
                         </div>
-                        <p class="text-sm text-center">IN ROOM DINING</p>
+                        <p class="text-sm text-center font-medium text-primary">IN ROOM DINING</p>
                     </div>
 
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-2">
-                            <i class="fas fa-parking text-accent"></i>
+                    <div class="flex flex-col items-center luxury-card p-6 rounded-lg">
+                        <div class="w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <i class="fas fa-parking text-white text-xl"></i>
                         </div>
-                        <p class="text-sm text-center">ON SITE PARKING</p>
+                        <p class="text-sm text-center font-medium text-primary">ON SITE PARKING</p>
                     </div>
                 </div>
             </div>
@@ -248,75 +280,73 @@
     </section>
 
     <!-- Stay Section -->
-    <section id="rooms" class="py-16 bg-gray-50">
+    <section id="rooms" class="py-16 bg-[#fdf6ee]">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-serif text-center mb-4">Rooms & Suites</h2>
+            <h2 class="text-3xl md:text-4xl font-serif text-center mb-4 text-primary">Rooms & Suites</h2>
             <p class="text-center text-gray-600 italic mb-12 max-w-4xl mx-auto">
                 Experience elegantly appointed & spacious guest-rooms & signature suites that strike a perfect balance
                 between comfort, efficient service and warmth of Indian hospitality.
             </p>
 
-
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Deluxe Room -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="images/PREMIUM ROOM.JPG">
+                <!-- Premium Room -->
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="images/PREMIUM ROOM.JPG" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h3 class="text-2xl font-serif mb-4 text-center">Premium Rooms</h3>
+                        <h3 class="text-2xl font-serif mb-4 text-center text-primary">Premium Rooms</h3>
                         <p class="text-gray-600 text-center mb-4">
                             These comfortable rooms measuring 34 sq m have an ambience that is calm and restful,
                             allowing you to work, relax or unwind after a long day. The amenities have been hand-picked
                             for their superior quality.
                         </p>
-                        <p class="text-center italic text-gray-500 mb-1">Choice of queen size or twin beds</p>
-                        <p class="text-center italic text-gray-500 mb-6">Separate work table</p>
+                        <p class="text-center italic text-lightbrown mb-1">Choice of queen size or twin beds</p>
+                        <p class="text-center italic text-lightbrown mb-6">Separate work table</p>
                         <div class="flex justify-center">
-                            <button class="bg-accent hover:bg-accent/90 text-white px-8 py-2 rounded-full font-bold">
-                                <a href="admin.php">BOOK NOW </a>
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                <a href="admin.php">BOOK NOW</a>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Superior Room -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
                     <img src="images/SUPERIOR ROOM KING SIZE BED.JPG" alt="Superior Room"
                         class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h3 class="text-2xl font-serif mb-4 text-center">Superior Room</h3>
+                        <h3 class="text-2xl font-serif mb-4 text-center text-primary">Superior Room</h3>
                         <p class="text-gray-600 text-center mb-4">
                             Contemporary décor and a cheerful ambience welcome each guest into these restful rooms,
                             measuring 34 sq m. Perfect for a pleasant holiday or a busy business trip. Their location on
                             the higher floors of the hotel offers sweeping views of the surrounding areas.
                         </p>
-                        <p class="text-center italic text-gray-500 mb-1">Separate sitting area</p>
-                        <p class="text-center italic text-gray-500 mb-1">Access to swimming pool and business centre</p>
-                        <p class="text-center italic text-gray-500 mb-6">Three fixture bathroom</p>
+                        <p class="text-center italic text-lightbrown mb-1">Separate sitting area</p>
+                        <p class="text-center italic text-lightbrown mb-1">Access to swimming pool and business centre</p>
+                        <p class="text-center italic text-lightbrown mb-6">Three fixture bathroom</p>
                         <div class="flex justify-center">
-                            <button class="bg-accent hover:bg-accent/90 text-white px-8 py-2 rounded-full font-bold">
-                                <a href="admin.php">BOOK NOW </a>
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                <a href="admin.php">BOOK NOW</a>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Club Room -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Executive Room -->
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
                     <img src="images/VENTILATED ROOMS.JPG" alt="Club Room" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h3 class="text-2xl font-serif mb-4 text-center">Executive Room</h3>
+                        <h3 class="text-2xl font-serif mb-4 text-center text-primary">Executive Room</h3>
                         <p class="text-gray-600 text-center mb-4">
                             Smart and contemporary décor that will win the approval of today's savvy traveller, with
                             amenities that have been carefully selected. Measuring 34 sq m, these rooms overlook the
                             sparkling infinity pool.
                         </p>
-                        <p class="text-center italic text-gray-500 mb-1">Separate sitting area</p>
-                        <p class="text-center italic text-gray-500 mb-1">Sofa and study table</p>
-                        <p class="text-center italic text-gray-500 mb-6">Daily buffet breakfast</p>
+                        <p class="text-center italic text-lightbrown mb-1">Separate sitting area</p>
+                        <p class="text-center italic text-lightbrown mb-1">Sofa and study table</p>
+                        <p class="text-center italic text-lightbrown mb-6">Daily buffet breakfast</p>
                         <div class="flex justify-center">
-                            <button class="bg-accent hover:bg-accent/90 text-white px-8 py-2 rounded-full font-bold">
-                                <a href="admin.php">BOOK NOW </a>
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                <a href="admin.php">BOOK NOW</a>
                             </button>
                         </div>
                     </div>
@@ -326,9 +356,9 @@
     </section>
 
     <!-- Dining Section -->
-    <section class="py-16">
+    <section class="py-16 section-bg">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-serif text-center mb-4">Dining & After Hours</h2>
+            <h2 class="text-3xl md:text-4xl font-serif text-center mb-4 text-primary">Dining & After Hours</h2>
             <p class="text-center text-gray-600 italic mb-12 max-w-4xl mx-auto">
                 Indigenous cuisine with the finest ingredients come together at the food & beverage venues, to create
                 signature gourmet experiences.
@@ -336,132 +366,134 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- WelcomCafe -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="images/RESTAURANT copy.jpg">
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="images/RESTAURANT copy.jpg" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h3 class="text-2xl font-serif mb-2 text-center">WelcomCafe</h3>
-                        <p class="text-center text-gray-500 italic mb-4">Welcomhotel by Gayatri's Hotels, Berhampur</p>
+                        <h3 class="text-2xl font-serif mb-2 text-center text-primary">WelcomCafe</h3>
+                        <p class="text-center text-lightbrown italic mb-4">Welcomhotel by Gayatri's Hotels, Berhampur</p>
                         <p class="text-gray-600 text-center mb-4">
                             This warm and welcoming restaurant offers all-day dining with dishes from across India and
                             from overseas create delectable feasts to choose from. Oriya delicacies are also on offer.
                             The culinary exploration can be an endless one!
                         </p>
-                        <p class="text-center italic text-gray-500 mb-1">Multicuisine</p>
-                        <p class="text-center italic text-gray-500 mb-1">Relaxed</p>
-                        <p class="text-center italic text-gray-500 mb-6">Operational Period: All Day Dining</p>
-                    </div>
-                </div>
-
-                <!-- Peshawri -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="images/COMPLIMENTARY.JPG">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-serif mb-2 text-center">Complimentary Delights</h3>
-                        <p class="text-center text-gray-500 italic mb-4">Available at Welcomhotel by Gayatri's Hotels,
-                            Berhampur</p>
-                        <p class="text-gray-600 text-center mb-4">
-                            Enjoy a warm welcome with our complimentary tea and snacks, served with a touch of elegance.
-                            Perfect for relaxing after your journey or during a casual conversation in our lounge.
-                        </p>
-                        <p class="text-center italic text-gray-500 mb-1">Freshly Brewed Tea</p>
-                        <p class="text-center italic text-gray-500 mb-1">Assorted Snacks</p>
-                        <p class="text-center italic text-gray-500 mb-6">Available During Check-in Hours</p>
+                        <p class="text-center italic text-lightbrown mb-1">Multicuisine</p>
+                        <p class="text-center italic text-lightbrown mb-1">Relaxed</p>
+                        <p class="text-center italic text-lightbrown mb-6">Operational Period: All Day Dining</p>
                         <div class="flex justify-center">
-                            <button class="bg-accent hover:bg-accent/90 text-white px-8 py-2 rounded-full font-bold">
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
                                 <a href="admin.php">ENJOY NOW</a>
                             </button>
                         </div>
                     </div>
                 </div>
 
+                <!-- Complimentary -->
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="images/COMPLIMENTARY.JPG" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-serif mb-2 text-center text-primary">Complimentary Delights</h3>
+                        <p class="text-center text-lightbrown italic mb-4">Available at Welcomhotel by Gayatri's Hotels,
+                            Berhampur</p>
+                        <p class="text-gray-600 text-center mb-4">
+                            Enjoy a warm welcome with our complimentary tea and snacks, served with a touch of elegance.
+                            Perfect for relaxing after your journey or during a casual conversation in our lounge.
+                        </p>
+                        <p class="text-center italic text-lightbrown mb-1">Freshly Brewed Tea</p>
+                        <p class="text-center italic text-lightbrown mb-1">Assorted Snacks</p>
+                        <p class="text-center italic text-lightbrown mb-6">Available During Check-in Hours</p>
+                        <div class="flex justify-center">
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                <a href="admin.php">ENJOY NOW</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-                <!-- Swizzle -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <img src="images/RESTAURANT.JPG" alt="Hotel Restaurant">
-    <div class="p-6">
-        <h3 class="text-2xl font-serif mb-2 text-center">The Spice Court</h3>
-        <p class="text-center text-gray-500 italic mb-4">Welcomhotel by Gayatri's Hotels, Berhampur</p>
-        <p class="text-gray-600 text-center mb-4">
-            Experience fine dining like never before at The Spice Court — where traditional Indian flavors meet contemporary presentation. Perfect for family dinners or a romantic evening.
-        </p>
-        <p class="text-center italic text-gray-500 mb-1">Indian & Continental Cuisine</p>
-        <p class="text-center italic text-gray-500 mb-1">Elegant Dining</p>
-        <p class="text-center italic text-gray-500 mb-6">Operational Hours: 11:00 AM to 11:00 PM</p>
-    </div>
-</div>
-
+                <!-- The Spice Court -->
+                <div class="luxury-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="images/RESTAURANT.JPG" alt="Hotel Restaurant" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-serif mb-2 text-center text-primary">The Spice Court</h3>
+                        <p class="text-center text-lightbrown italic mb-4">Welcomhotel by Gayatri's Hotels, Berhampur</p>
+                        <p class="text-gray-600 text-center mb-4">
+                            Experience fine dining like never before at The Spice Court — where traditional Indian flavors meet contemporary presentation. Indulge in handcrafted delicacies made with the freshest ingredients.
+                        </p>
+                        <p class="text-center italic text-lightbrown mb-1">Indian & Continental Cuisine</p>
+                        <p class="text-center italic text-lightbrown mb-1">Elegant Dining</p>
+                        <p class="text-center italic text-lightbrown mb-6">Operational Hours: 11:00 AM to 11:00 PM</p>
+                        <div class="flex justify-center">
+                            <button class="bg-gradient-gold hover:shadow-lg text-white px-8 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+                                <a href="admin.php">ENJOY NOW</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-
-    <div class="container mx-auto px-4 py-12">
-        <!-- First section - Image on left, content on right -->
+    <!-- Features Section -->
+    <div class="container mx-auto px-4 py-12 bg-[#fdf6ee]">
+        <!-- Business Center -->
         <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
             <div class="md:w-1/2">
-                <img src="images/BUSINESS CENTER (2).JPG" alt="Placeholder image"
-                    class="w-full h-auto rounded-lg shadow-lg">
+                <img src="images/BUSINESS CENTER (2).JPG" alt="Business Center"
+                    class="w-full h-auto rounded-lg shadow-xl border-2 border-accent">
             </div>
             <div class="md:w-1/2">
-                <h2 class="text-3xl font-bold mb-4">Business Center</h2>
+                <h2 class="text-3xl font-bold mb-4 text-primary">Business Center</h2>
                 <p class="text-gray-600 mb-4">
-    Step into the Business Center at Gayatri's Hotel – a dedicated space designed for productivity and privacy. 
-    Whether you're an entrepreneur, a corporate guest, or a remote professional, this room offers a quiet and 
-    fully-equipped environment to get work done. With high-speed Wi-Fi, ergonomic seating, and seamless video 
-    conferencing facilities, it's ideal for virtual meetings or in-person discussions. Soundproof cabins ensure 
-    confidentiality, while services like printing, scanning, and secretarial assistance add to your convenience. 
-    Available 24/7, the Business Center makes work feel effortless, even while you're away from the office.
-</p>
-
-                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded self-start">
+                    Step into the Business Center at Gayatri's Hotel – a dedicated space designed for productivity and privacy. 
+                    Whether you're an entrepreneur, a corporate guest, or a remote professional, this room offers a quiet and 
+                    fully-equipped environment to get work done. With high-speed Wi-Fi, ergonomic seating, and seamless video 
+                    conferencing facilities, it's ideal for virtual meetings or in-person discussions.
+                </p>
+                <button class="bg-gradient-gold hover:shadow-lg text-white px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
                     <a href="viewgallery.html">Explore More</a>
                 </button>
             </div>
         </div>
 
-        <!-- Second section - Content on left, image on right -->
+        <!-- Hotel & Bar -->
         <div class="flex flex-col md:flex-row-reverse items-stretch gap-8 mb-16">
             <div class="md:w-1/2">
                 <img src="images/DSC_8260.JPG" alt="Gayatri's Hotel & Bar"
-                    class="w-full h-full object-cover rounded-lg shadow-lg">
+                    class="w-full h-full object-cover rounded-lg shadow-xl border-2 border-accent">
             </div>
-            <div class="md:w-1/2 flex flex-col justify-center bg-gray-50 p-6 rounded-lg">
-                <h2 class="text-3xl font-bold mb-4">Gayatri's Hotel & Bar</h2>
+            <div class="md:w-1/2 flex flex-col justify-center luxury-card p-8 rounded-lg">
+                <h2 class="text-3xl font-bold mb-4 text-primary">Gayatri's Hotel & Bar</h2>
                 <p class="text-gray-600 mb-4">
                     Welcome to Gayatri's Hotel & Bar, a premium destination offering luxurious accommodations and an
                     exquisite bar experience. Our hotel features elegantly designed rooms with modern amenities, while
-                    our bar serves premium
-                    cocktails, fine wines, and a selection of international spirits. Enjoy our signature hospitality
-                    with 24/7 room service,
-                    a multi-cuisine restaurant, and a vibrant nightlife experience at our in-house bar.
+                    our bar serves premium cocktails, fine wines, and a selection of international spirits.
                 </p>
-                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded self-start">
+                <button class="bg-gradient-gold hover:shadow-lg text-white px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 self-start">
                     <a href="viewgallery.html">Explore More</a>
                 </button>
             </div>
         </div>
 
-        <!-- Third section - Image on left, content on right -->
+        <!-- Fine Dining -->
         <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="md:w-1/2">
-                <img src="images/img1.JPG" alt="Gayatri's Hotel Restaurant" class="w-full h-auto rounded-lg shadow-lg">
+                <img src="images/img1.JPG" alt="Gayatri's Hotel Restaurant" class="w-full h-auto rounded-lg shadow-xl border-2 border-accent">
             </div>
             <div class="md:w-1/2">
-                <h2 class="text-3xl font-bold mb-4">Gayatri's Fine Dining</h2>
+                <h2 class="text-3xl font-bold mb-4 text-primary">Gayatri's Fine Dining</h2>
                 <p class="text-gray-600 mb-4">
                     Experience culinary excellence at Gayatri's multi-cuisine restaurant, where our master chefs create
                     authentic flavors from around the world. Our menu features a perfect blend of Indian, Continental,
-                    and Oriental delicacies prepared with fresh, locally-sourced ingredients. The elegant ambiance,
-                    attentive service, and carefully curated wine list make every dining experience memorable. Open for
-                    breakfast, lunch, and dinner with special Sunday brunch buffet.
+                    and Oriental delicacies prepared with fresh, locally-sourced ingredients.
                 </p>
-                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded self-start">
+                <button class="bg-gradient-gold hover:shadow-lg text-white px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
                     <a href="viewgallery.html">Explore More</a>
                 </button>
             </div>
         </div>
     </div>
-    <section id="contact" class="py-16">
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 section-bg">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div class="reveal">
@@ -469,118 +501,116 @@
                     <p class="text-gray-600 mb-8">We're here to answer any questions you may have about our hotel and
                         services.</p>
 
-                    <div class="space-y-4">
-                        <div class="flex items-start">
+                    <div class="space-y-6">
+                        <div class="flex items-start luxury-card p-4 rounded-lg">
                             <div class="text-accent text-xl mr-4">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold">Address</h4>
+                                <h4 class="font-bold text-primary">Address</h4>
                                 <p class="text-gray-600">Town Hall Road, Beside khallikote college,
-                                    BERHAMPUR, Ganjam, Odisha</p>
+                                    BERHAMPUR, Ganjam, Odisha</p>
                             </div>
                         </div>
 
-                        <div class="flex items-start">
+                        <div class="flex items-start luxury-card p-4 rounded-lg">
                             <div class="text-accent text-xl mr-4">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold">Phone</h4>
+                                <h4 class="font-bold text-primary">Phone</h4>
                                 <p class="text-gray-600">0680-2223000</p>
                                 <p class="text-gray-600">+91 99123 45234</p>
                                 <p class="text-gray-600">+91 72051 65444</p>
                             </div>
                         </div>
 
-                        <div class="flex items-start">
+                        <div class="flex items-start luxury-card p-4 rounded-lg">
                             <div class="text-accent text-xl mr-4">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold">Email</h4>
+                                <h4 class="font-bold text-primary">Email</h4>
                                 <p class="text-gray-600">booking.thegayatris@gmail.com</p>
                             </div>
                         </div>
 
-                        <div class="flex items-start">
+                        <div class="flex items-start luxury-card p-4 rounded-lg">
                             <div class="text-accent text-xl mr-4">
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold">Reception Hours</h4>
+                                <h4 class="font-bold text-primary">Reception Hours</h4>
                                 <p class="text-gray-600">24/7, 365 days a year</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-8">
-                        <h4 class="font-bold mb-4">Follow Us</h4>
+                        <h4 class="font-bold mb-4 text-primary">Follow Us</h4>
                         <div class="flex space-x-4">
-                            <a href="https://www.facebook.com/share/1C7xTuHttf/" class="text-primary hover:text-accent text-2xl">
+                            <a href="https://www.facebook.com/share/1C7xTuHttf/" class="text-primary hover:text-accent text-2xl transition-colors">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="#" class="text-primary hover:text-accent text-2xl">
+                            <a href="#" class="text-primary hover:text-accent text-2xl transition-colors">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            
                         </div>
                     </div>
                 </div>
 
                 <div class="reveal" data-delay="0.2">
-                    <form action="send.php" method="post" class="bg-white p-8 rounded-lg shadow-md">
+                    <form action="send.php" method="post" class="luxury-card p-8 rounded-lg shadow-xl">
                         <h3 class="text-2xl font-bold text-primary mb-6">Send Us a Message</h3>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label class="block text-gray-700 mb-2">First Name</label>
+                                <label class="block text-primary mb-2 font-medium">First Name</label>
                                 <input name="firstName" type="text" placeholder="Enter your first name"
-                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    class="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                                     required>
                             </div>
 
                             <div>
-                                <label class="block text-gray-700 mb-2">Last Name</label>
+                                <label class="block text-primary mb-2 font-medium">Last Name</label>
                                 <input name="lastName" type="text" placeholder="Enter your last name"
-                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    class="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                                     required>
                             </div>
                         </div>
 
                         <div class="mb-6">
-                            <label class="block text-gray-700 mb-2">Email</label>
+                            <label class="block text-primary mb-2 font-medium">Email</label>
                             <input name="email" type="email" placeholder="Enter your email address"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                class="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                                 required>
                         </div>
 
                         <div class="mb-6">
-                            <label class="block text-gray-700 mb-2">Phone</label>
+                            <label class="block text-primary mb-2 font-medium">Phone</label>
                             <input name="phone" type="tel" placeholder="Enter your phone number"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                                class="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors">
                         </div>
 
                         <div class="mb-6">
-                            <label class="block text-gray-700 mb-2">Message</label>
+                            <label class="block text-primary mb-2 font-medium">Message</label>
                             <textarea name="message" rows="4" placeholder="Write your message here..."
-                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                                class="w-full border-2 border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                                 required></textarea>
                         </div>
 
                         <button type="submit"
-                            class="w-full bg-primary text-white py-3 rounded-md hover:bg-opacity-90 transition">
+                            class="w-full bg-gradient-gold text-white py-3 rounded-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 font-bold">
                             Send Message
                         </button>
                     </form>
-
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Map -->
-    <div class="h-96 w-full">
+    <div class="h-96 w-full border-t-4 border-accent">
         <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3765.401211069201!2d84.79105921023783!3d19.308388944561692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3d51558394f19d%3A0xeb53364b562abba9!2sHotel%20Gayatri&#39;s!5e0!3m2!1sen!2sin!4v1747139128135!5m2!1sen!2sin"
             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
@@ -588,113 +618,102 @@
         </iframe>
     </div>
 
-
     <!-- Footer -->
-    <footer class="bg-primary w-full text-white py-12">
+    <footer class="bg-gradient-luxury w-full text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Luxury<span class="text-accent">Hotel</span></h3>
-                    <p class="mb-4">Experience luxury and comfort like never before at our premium hotel located in the
+                    <h3 class="text-xl font-bold mb-4">Gayatri's<span class="text-accent">Hotel</span></h3>
+                    <p class="mb-4 text-cream">Experience luxury and comfort like never before at our premium hotel located in the
                         heart of the city.</p>
                     <div class="flex space-x-4">
-                        <a href="https://www.facebook.com/share/1C7xTuHttf/" class="text-white hover:text-accent">
+                        <a href="https://www.facebook.com/share/1C7xTuHttf/" class="text-white hover:text-accent transition-colors">
                             <i class="fab fa-facebook text-2xl"></i>
                         </a>
-                        <a href="#" class="text-white hover:text-accent">
+                        <a href="#" class="text-white hover:text-accent transition-colors">
                             <i class="fab fa-instagram text-2xl"></i>
                         </a>
-                       
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <h3 class="text-xl font-bold mb-4 text-accent">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-accent">Home</a></li>
-                        <li><a href="#rooms" class="hover:text-accent">Rooms</a></li>
-                        <li><a href="viewgallery.html" class="hover:text-accent">Gallery</a></li>
-                        <li><a href="#about" class="hover:text-accent">About</a></li>
-                        <li><a href="#contact" class="hover:text-accent">Contact</a></li>
+                        <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="#rooms" class="hover:text-accent transition-colors">Rooms</a></li>
+                        <li><a href="viewgallery.html" class="hover:text-accent transition-colors">Gallery</a></li>
+                        <li><a href="#about" class="hover:text-accent transition-colors">About</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Contact</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Contact</h3>
+                    <h3 class="text-xl font-bold mb-4 text-accent">Contact</h3>
                     <ul class="space-y-2">
                         <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
-                            <span>Town Hall Road, Beside khallikote college, BERHAMPUR, Ganjam, Odisha</span>
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-accent"></i>
+                            <span class="text-cream">Town Hall Road, Beside khallikote college, BERHAMPUR, Ganjam, Odisha</span>
                         </li>
                         <li class="flex items-start space-x-3">
-                            <i class="fas fa-phone-alt text-white text-xl text-primary mt-1"></i>
+                            <i class="fas fa-phone-alt text-accent text-xl mt-1"></i>
                             <div class="flex flex-col space-y-1">
-                                <a href="tel:+9106802223000" class="text-white hover:text-[#E8AA33]">+91
-                                    0680-2223000</a>
-                                <a href="tel:+919912345234" class="text-white hover:text-[#E8AA33]">+91 99123 45234</a>
-                                <a href="tel:+917205165444" class="text-white hover:text-[#E8AA33]">+91 72051 65444</a>
+                                <a href="tel:+9106802223000" class="text-cream hover:text-accent transition-colors">+91 0680-2223000</a>
+                                <a href="tel:+919912345234" class="text-cream hover:text-accent transition-colors">+91 99123 45234</a>
+                                <a href="tel:+917205165444" class="text-cream hover:text-accent transition-colors">+91 72051 65444</a>
                             </div>
                         </li>
-
                         <li class="flex items-start">
-                            <i class="fas fa-envelope mt-1 mr-2"></i>
-                            <span>booking.thegayatris@gmail.com</span>
+                            <i class="fas fa-envelope mt-1 mr-2 text-accent"></i>
+                            <span class="text-cream">booking.thegayatris@gmail.com</span>
                         </li>
                     </ul>
                 </div>
-
-
             </div>
 
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p>&copy; 2025 Gayatri's Hotel. All rights reserved.</p>
+            <div class="border-t border-lightbrown mt-8 pt-8 text-center">
+                <p class="text-cream">&copy; 2025 Gayatri's Hotel. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Cookie Banner -->
-    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50 cookie-banner">
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-[#fdf6ee] shadow-2xl p-4 z-50 cookie-banner border-t-4 border-accent">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0 md:mr-8">
                     <h4 class="font-bold text-primary mb-2">This site uses cookies</h4>
                     <p class="text-sm text-gray-600">We use cookies for the purpose of analyzing and measuring traffic,
                         frequency and browsing, define services and offers customized to your interests as well as
-                        sharing with or redirecting to third party sites. These cookies do not store personally
-                        identifiable information nor can they harm your device. By continuing to use our site, you agree
-                        to our use of cookies.</p>
+                        sharing with or redirecting to third party sites.</p>
                 </div>
 
                 <div class="flex space-x-4">
                     <button id="accept-cookies"
-                        class="bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-md whitespace-nowrap">I
+                        class="bg-gradient-gold hover:shadow-lg text-white px-6 py-2 rounded-full whitespace-nowrap font-bold transition-all duration-300">I
                         AGREE</button>
                     <button id="more-cookies"
-                        class="bg-gray-200 hover:bg-gray-300 text-primary px-4 py-2 rounded-md whitespace-nowrap">KNOW
+                        class="bg-gray-200 hover:bg-gray-300 text-primary px-6 py-2 rounded-full whitespace-nowrap font-bold transition-all duration-300">KNOW
                         MORE</button>
                 </div>
             </div>
         </div>
     </div>
 
-        <!-- Back to Top Button -->
+    <!-- Back to Top Button -->
     <button id="back-to-top"
-        class="fixed bottom-6 right-6 bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
-        <i class="fas fa-arrow-up"></i>
+        class="fixed bottom-6 right-6 bg-gradient-gold text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl opacity-0 invisible transition-all duration-300 hover:shadow-2xl transform hover:scale-110">
+        <i class="fas fa-arrow-up text-lg"></i>
     </button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-            // Mobile Menu Toggle
+        // Mobile Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
 
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-
-      
-  
-
 
         // Scroll Reveal Animation
         function reveal() {
@@ -715,7 +734,7 @@
         }
 
         window.addEventListener('scroll', reveal);
-        reveal(); // Call once on load
+        reveal();
 
         // Smooth Scrolling for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -730,7 +749,6 @@
                         behavior: 'smooth'
                     });
 
-                    // Close mobile menu if open
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                     }
@@ -744,13 +762,13 @@
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                header.classList.add('bg-white', 'shadow-md');
+                header.classList.add('bg-[#fdf6ee]', 'shadow-lg');
                 header.classList.remove('bg-transparent');
 
                 backToTop.classList.remove('opacity-0', 'invisible');
                 backToTop.classList.add('opacity-100', 'visible');
             } else {
-                header.classList.remove('shadow-md');
+                header.classList.remove('shadow-lg');
 
                 backToTop.classList.add('opacity-0', 'invisible');
                 backToTop.classList.remove('opacity-100', 'visible');
@@ -765,7 +783,6 @@
             });
         });
 
-
         // Show cookie banner after a short delay
         setTimeout(() => {
             document.getElementById('cookie-banner').classList.add('show');
@@ -774,15 +791,13 @@
         // Handle cookie banner buttons
         document.getElementById('accept-cookies').addEventListener('click', () => {
             document.getElementById('cookie-banner').classList.remove('show');
-            // Here you would normally set a cookie to remember the user's choice
         });
 
         document.getElementById('more-cookies').addEventListener('click', () => {
-            // Redirect to cookie policy page or show more information
             alert('This would navigate to the cookie policy page');
         });
 
-        // Tab swGayatri'shing for Brief Sketch / More Information
+        // Tab switching for Brief Sketch / More Information
         document.getElementById('brief-tab').addEventListener('click', () => {
             document.getElementById('brief-tab').classList.add('tab-active');
             document.getElementById('brief-tab').classList.remove('tab-inactive');
@@ -803,14 +818,13 @@
             document.getElementById('brief-content').classList.add('hidden');
         });
 
-  
         // Add scroll effect to header
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
+                header.classList.add('shadow-lg');
             } else {
-                header.classList.remove('shadow-md');
+                header.classList.remove('shadow-lg');
             }
         });
     </script>
